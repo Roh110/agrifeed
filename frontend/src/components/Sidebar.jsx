@@ -1,74 +1,102 @@
+
 import React from "react";
+import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
-  FlaskConical,
+  ScanSearch,
   History,
   Lightbulb,
   Bell,
-  Building2,
+  Sprout,
   Settings,
-  LogOut
+  LogOut,
+  ShieldCheck,
 } from "lucide-react";
 
+const menuItems = [
+  {
+    name: "Dashboard",
+    path: "/",
+    icon: LayoutDashboard,
+    end: true,
+  },
+  {
+    name: "Feed Analysis",
+    path: "/feed-analysis",
+    icon: ScanSearch,
+  },
+  {
+    name: "History",
+    path: "/history",
+    icon: History,
+  },
+  {
+    name: "Recommendations",
+    path: "/recommendations",
+    icon: Lightbulb,
+  },
+  {
+    name: "Alerts",
+    path: "/alerts",
+    icon: Bell,
+  },
+  {
+    name: "Farm Management",
+    path: "/farm-management",
+    icon: Sprout,
+  },
+  {
+    name: "Admin Dashboard",
+    path: "/admin",
+    icon: ShieldCheck,
+  },
+];
+
 function Sidebar() {
-  const menuItems = [
-    {
-      icon: <LayoutDashboard size={20} />,
-      label: "Dashboard"
-    },
-    {
-      icon: <FlaskConical size={20} />,
-      label: "Feed Analysis"
-    },
-    {
-      icon: <History size={20} />,
-      label: "History"
-    },
-    {
-      icon: <Lightbulb size={20} />,
-      label: "Recommendations"
-    },
-    {
-      icon: <Bell size={20} />,
-      label: "Alerts"
-    },
-    {
-      icon: <Building2 size={20} />,
-      label: "Farm Management"
-    },
-    {
-      icon: <Settings size={20} />,
-      label: "Settings"
-    }
-  ];
-
   return (
-    <div className="sidebar">
-      <div className="sidebar-header">
-        <h2>Menu</h2>
+    <aside className="sidebar">
+      <div className="sidebar-heading">
+        <span className="sidebar-section-label">WORKSPACE</span>
       </div>
 
-      <div className="sidebar-menu">
-        {menuItems.map((item, index) => (
-          <div className="menu-item" key={index}>
-            <span className="menu-icon">
-              {item.icon}
-            </span>
+      <nav className="sidebar-menu">
+        {menuItems.map((item) => {
+          const Icon = item.icon;
 
-            <span className="menu-label">
-              {item.label}
-            </span>
+          return (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              end={item.end}
+              className={({ isActive }) =>
+                `sidebar-link ${isActive ? "active" : ""}`
+              }
+            >
+              <Icon size={19} strokeWidth={1.8} />
+              <span>{item.name}</span>
+            </NavLink>
+          );
+        })}
+      </nav>
+
+      <div className="sidebar-bottom">
+        <div className="sidebar-help">
+          <div className="help-icon">
+            <Sprout size={20} />
           </div>
-        ))}
-      </div>
 
-      <div className="sidebar-footer">
-        <div className="menu-item logout">
-          <LogOut size={20} />
-          <span>Logout</span>
+          <div>
+            <strong>AgriSmart AI</strong>
+            <p>Smart feed management</p>
+          </div>
         </div>
+
+        <NavLink to="/login" className="sidebar-link logout-link">
+          <LogOut size={19} />
+          <span>Login / Logout</span>
+        </NavLink>
       </div>
-    </div>
+    </aside>
   );
 }
 
